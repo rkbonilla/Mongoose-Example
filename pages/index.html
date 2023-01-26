@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Entry Page</title>
+    <script>
+        function CheckForm() {
+            if (document.getElementById("GameTitle").value == "") {
+                event.preventDefault();
+                document.getElementById("error").innerHTML = "Please enter a Game Title";
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <h1>Enter your games here!</h1>
+    <form action="/saveGame" method="post" onsubmit="return CheckForm()">
+        <span id="error" style="color: red"></span>
+        <br>
+        <label for="game">Enter title of game here</label>
+        <br>
+        <input type="text" name="game" id="GameTitle" placeholder="Enter Game Here">
+        <br>
+        <button type="submit">Save Game</button>
+    </form>
+</body>
+
+</html>
