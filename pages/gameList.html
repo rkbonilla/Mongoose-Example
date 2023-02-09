@@ -41,11 +41,29 @@
                                             "Content-Type": "application/json"
                                         },
                                         body: JSON.stringify({
-                                            game: game._id
+                                            game: game
                                         })
                                     })
                                 })
                                 gameElement.appendChild(deleteButton);
+
+                                var updateButton = document.createElement('button');
+                                updateButton.innerText = "Update Game";
+                                updateButton.addEventListener("click", function () {
+                                    // fetch request to delete the game
+                                    //location.reload();
+                                    window.location.replace("/getID:" + game._id + "&name=" + game.game) 
+                                    fetch("/getID", {
+                                        method: "POST",
+                                        headers: {
+                                            "Content-Type": "application/json"
+                                        },
+                                        body: JSON.stringify({
+                                            game: game
+                                        })
+                                    })
+                                })
+                                gameElement.appendChild(updateButton);
                             }
                         })
                 })

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Page</title>
+</head>
+
+<body>
+    <h1>Update Page</h1>
+    <form action="/updateGame" method="POST">
+        <label for="name" id="name">Name goes here</label>
+        <input type="text" name="game" id="name">
+        <br>
+        <input type="text" name="id" id="id" value="" hidden>
+        <br>
+        <input type="submit" value="Update Name">
+    </form>
+    <script>
+        var queryData = window.location.search;
+        console.log(queryData)
+        var entries = new URLSearchParams(queryData);
+        console.log(entries.get("name"))
+        document.getElementById("name").innerText = entries.get("name");
+        document.getElementById("id").value = entries.get("id");
+    </script>
+</body>
+
+</html>
