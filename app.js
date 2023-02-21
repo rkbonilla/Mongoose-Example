@@ -50,6 +50,24 @@ app.get("/getGames", function (req, res) {
         })
 })
 
+app.get("/getGamesAlpha", function (req, res) {
+    Game.find({})
+        .sort('game')
+        .then(function (game) {
+            //console.log({ game });
+            res.json({ game });
+        })
+})
+
+app.get("/getGamesReverse", function (req, res) {
+    Game.find({})
+        .sort('-game')
+        .then(function (game) {
+            //console.log({ game });
+            res.json({ game });
+        })
+})
+
 app.post("/deleteGame", function (req, res) {
     console.log(`Game Deleted: ${req.body.game._id}`)
     Game.findByIdAndDelete(req.body.game._id).exec();
@@ -69,6 +87,18 @@ app.post("/updateGame", function (req, res) {
         res.redirect('gameList.html')
     })
 })
+
+app.post('/searchGame', (req, res) => {
+    Game.findOne({ $game: { $search: req.body } }).exec((err, games) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Error searching the database');
+      } else {
+        console.log('Search results:', games);
+        res.json(games);
+      }
+    });
+  });
 
 app.use(express.static(__dirname + "/pages"));
 app.listen(port, function () {

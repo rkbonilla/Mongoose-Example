@@ -8,7 +8,7 @@
     <title>Game Entry Page</title>
     <script>
         function CheckForm() {
-            if (document.getElementById("GameTitle").value == "") {
+            if (document.getElementById("search-input").value == "") {
                 event.preventDefault();
                 document.getElementById("error").innerHTML = "Please enter a Game Title";
             }
@@ -22,27 +22,32 @@
             fetch(`/search?q=${searchTerm}`)
                 .then(response => response.json())
                 .then(data => {
-                    // Update the HTML with the search results
+                    var gameElement = document.createElement('p');
+                    gameElement.innerHTML = response + " was found in the database!";
+                    document.getElementById("search-results").append(gameElement);
                 });
         });
     </script>
 </head>
 
 <body>
-    <h1>Enter your games here!</h1>
-    <form action="/saveGame" method="post" onsubmit="return CheckForm()">
-        <span id="error" style="color: red"></span>
+    <div id="container">
+        <h1>Search for a game here!</h1>
+        <form action="/searchGame" method="post" onsubmit="return CheckForm()">
+            <span id="error" style="color: red"></span>
+            <br>
+            <label for="game">Enter title of game here</label>
+            <br>
+            <input type="text" name="search" id="search-input" placeholder="Enter Game Here">
+            <br>
+            <button type="submit" id="search-button">Search Game</button>
+            <div id="search-results"></div>
+        </form>
         <br>
-        <label for="game">Enter title of game here</label>
-        <br>
-        <input type="text" name="game" id="GameTitle" placeholder="Enter Game Here">
-        <br>
-        <button type="submit">Save Game</button>
-    </form>
-    <br>
-    <nav>
-        <a href="gameList.html">Go to Games List</a>
-    </nav>
+        <nav>
+            <a href="gameList.html">Go to Games List</a>
+        </nav>
+    </div>
 </body>
 
 </html>
