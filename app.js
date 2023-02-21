@@ -89,16 +89,17 @@ app.post("/updateGame", function (req, res) {
 })
 
 app.post('/searchGame', (req, res) => {
-    Game.findOne({ $game: { $search: req.body } }).exec((err, games) => {
-      if (err) {
-        console.error(err);
-        res.status(500).send('Error searching the database');
-      } else {
-        console.log('Search results:', games);
-        res.json(games);
-      }
+    console.log(req.body)
+    Game.find(req.body.game).exec((err, game) => {
+        if (err) {
+            console.error(err);
+            res.status(500).send('Error searching the database');
+        } else {
+            console.log('Search results:', game);
+            res.json(game);
+        }
     });
-  });
+});
 
 app.use(express.static(__dirname + "/pages"));
 app.listen(port, function () {
