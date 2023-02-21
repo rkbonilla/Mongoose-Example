@@ -90,13 +90,20 @@ app.post("/updateGame", function (req, res) {
 
 app.post('/searchGame', (req, res) => {
     console.log(req.body)
-    Game.find(req.body.game).exec((err, game) => {
+    Game.find({ game: req.body.game }).exec((err, game) => {
         if (err) {
             console.error(err);
             res.status(500).send('Error searching the database');
         } else {
-            console.log('Search results:', game);
-            res.json(game);
+            if (game[0] == undefined) {
+                res.redirect('searchGame.html?game=game_not_found')
+                console.log('Search results:', req.body.game, 'was not found!');
+            }
+            else {
+                //res.json(game);
+                res.redirect('searchGame.html?game=' + req.body.game)
+                console.log('Search results:', game[0].game, 'was found in the database!');
+            }
         }
     });
 });

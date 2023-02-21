@@ -13,18 +13,6 @@
                 document.getElementById("error").innerHTML = "Please enter a Game Title";
             }
         }
-
-        const searchInput = document.getElementById('search-input');
-        const searchButton = document.getElementById('search-button');
-        const searchResults = document.getElementById('search-results');
-        searchButton.addEventListener('click', () => {
-            const searchTerm = searchInput.value;
-            fetch(`/search?q=${searchTerm}`)
-                .then(response => response.json())
-                .then(data => {
-                    // Update the HTML with the search results
-                });
-        });
     </script>
 </head>
 
@@ -41,7 +29,10 @@
     </form>
     <br>
     <nav>
-        <a href="gameList.html">Go to Games List</a>
+        <a href="gameList.html">Go to Games list.</a>
+        <br>
+        <br>
+        <a href="searchGame.html">Search the list.</a>
     </nav>
 </body>
 
