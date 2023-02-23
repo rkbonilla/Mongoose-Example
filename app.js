@@ -108,6 +108,27 @@ app.post('/searchGame', (req, res) => {
     });
 });
 
+//Unity Route
+app.post("/unity", function (req, res) {
+    console.log("Reached By Unity")
+    var data = {
+        "name": req.body.name,
+        "level": req.body.level,
+        "timeElapsed": req.body.timeElapsed
+    }
+    console.log(data);
+})
+
+app.get("/SendUnityData", function (req, res) {
+    console.log("Recieved Request from Unity")
+    var newData = {
+        "name": "Shmoovement",
+        "level": 3,
+        "timeElapsed": 43.33
+    }
+    res.send(newData);
+})
+
 app.use(express.static(__dirname + "/pages"));
 app.listen(port, function () {
     console.log(`Running on port ${port}.`)
