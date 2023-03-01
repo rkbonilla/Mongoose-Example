@@ -131,6 +131,14 @@ app.get("/SendUnityData", function (req, res) {
     res.send(newData);
 })
 
+app.get("/getUnityEntries", function (req, res) {
+    Game.find({})
+        .then(function (game) {
+            //console.log({ game });
+            res.json({ game });
+        })
+})
+
 app.post("/unityInsert", function (req, res) {
     console.log(req.body);
     new Unity(req.body).save();
