@@ -20,7 +20,9 @@ mongoose.connect(db.mongoURI, {
 })
 
 require("./models/Game");
+require("./models/Unity");
 var Game = mongoose.model("game");
+var Unity = mongoose.model("unity");
 
 // Example routes
 app.get("/", function (req, res) {
@@ -128,6 +130,12 @@ app.get("/SendUnityData", function (req, res) {
     }
     res.send(newData);
 })
+
+app.post("/unityInsert", function (req, res) {
+    console.log(req.body);
+    new Unity(req.body).save();
+})
+
 
 app.use(express.static(__dirname + "/pages"));
 app.listen(port, function () {
