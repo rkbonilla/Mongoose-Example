@@ -5,7 +5,8 @@ var bodyparser = require("body-parser");
 var mongoose = require("mongoose");
 var port = process.env.port || 3000;
 
-var db = require("./config/database")
+var db = require("./config/database");
+const e = require("express");
 
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: true }));
@@ -130,6 +131,35 @@ app.get("/SendUnityData", function (req, res) {
     }
     res.send(newData);
 })
+
+//unity insert
+app.post("/saveUnityEntry", function (req, res) {
+    console.log(req.body);
+    //res.send(req.body);
+    new Unity(req.body).save()
+        .then(function () {
+            console.log("Player saved.");
+        })
+})
+
+//unity delete
+app.post("/deleteUnityEntry", function (req, res) {
+    console.log(`User Deleted: ${req.body.screenName}`)
+    Unity.findOneAndDelete(req.body.screenName).exec();
+})
+
+app.get('/searchUnityEntries', (req, res) => {
+    console.log(req.query.screenName)
+    Unity.findOne({ screenName: req.query.screenName }).exec((err, unity) => {
+        if (err) {
+            console.error(err);
+        }
+        else {
+            console.log(unity);
+            res.send(unity)
+        }
+    });
+});
 
 app.use(express.static(__dirname + "/pages"));
 app.listen(port, function () {
