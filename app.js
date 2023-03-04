@@ -134,7 +134,7 @@ app.get("/SendUnityData", function (req, res) {
 
 //unity insert
 app.post("/saveUnityEntry", function (req, res) {
-    console.log(req.body);
+    //console.log(req.body);
     //res.send(req.body);
     new Unity(req.body).save()
         .then(function () {
@@ -144,18 +144,37 @@ app.post("/saveUnityEntry", function (req, res) {
 
 //unity delete
 app.post("/deleteUnityEntry", function (req, res) {
-    console.log(`User Deleted: ${req.body.screenName}`)
+    //console.log(`User Deleted: ${req.body.screenName}`)
     Unity.findOneAndDelete(req.body.screenName).exec();
 })
 
+app.post("/updateUnityEntry", function (req, res) {
+    //console.log(req.body)
+    Unity.findOneAndUpdate(req.body.screenName, { unity: req.body }, { new: true }).exec();
+    console.log("Updated record.")
+})
+
+app.get("/getAllUnityEntries", function (req, res) {
+    Unity.find({})
+        .then(function (Entries) {
+            console.log({ Entries });
+            res.json({ Entries });
+        })
+})
+
+//search one unity entry
 app.get('/searchUnityEntries', (req, res) => {
-    console.log(req.query.screenName)
+    //console.log(req.query.screenName)
     Unity.findOne({ screenName: req.query.screenName }).exec((err, unity) => {
         if (err) {
             console.error(err);
         }
+        if (!unity) {
+            //console.log("Player not found")
+            res.sendStatus(404);
+        }
         else {
-            console.log(unity);
+            //console.log(unity);
             res.send(unity)
         }
     });
